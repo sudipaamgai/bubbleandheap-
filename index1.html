@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300;1,400;1,700&family=Poppins:wght@200;300;400;500;700&family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet">
+
+
+  <style>
+    /* CSS styling for visualization */
+    .array-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+    }
+
+    .bar {
+      width: 30px;
+      margin: 0 2px;
+      background-color: black;
+    }
+    :root {
+  --primary-color-container: white;
+  /* --primary-color-background: #e4e5e9; */
+  --primary-color-button: rgba(128, 128, 128, 0.147);
+  --primary-color-button: white;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* overflow-x: hidden;
+  scroll-behavior: smooth; */
+  font-family: "Lato", sans-serif;
+  scroll-behavior: smooth;
+}
+nav {
+  position: absolute;
+  /* border: 1px solid red; */
+  height: 8vh;
+  padding: auto;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  align-items: center;
+  color: white;
+  font-size: 1.1em;
+}
+nav li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: auto 3%; */
+}
+nav li ul,
+a {
+  margin: auto 12px;
+}
+p {
+  font-family: "Lato";
+  font-size: x-large;
+  font-weight: 400;
+}
+/* Scroll Snap Behaviour */
+html{
+  scroll-snap-type: y mandatory;
+}
+
+.svgimage {
+  /* border: 1px solid red; */
+  transform: translate(-16vh, 50vh);
+  min-width: 20vw;
+  height: 12vh;
+  animation: animateright 2s ease-out;
+  transition: transform;
+}
+.svgimage img:hover {
+  transform: scale(1.2);
+}
+
+.intro {
+  /* border: 1px solid red; */
+  margin-right: 31%;
+}
+.intro h1 {
+  margin: 40px;
+  animation: animateleft 2s ease-out;
+}
+.intro .introtext {
+  margin: auto 40px;
+  animation: animatetop 2s ease-out;
+}
+.theory {
+  width: auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+  /* margin: auto; */
+  padding: 5vw;
+  /*   
+  .introduction {
+    padding: 5vh;
+  } */
+}
+
+/*.visualiser {
+  height: 100vh;
+  background-color: rgba(162, 169, 173, 0.8);
+  display: flex;
+  align-items: center;
+  width: auto;
+}*/
+.container{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50vh;
+  height: 50%;
+  width: auto;
+  max-width: 90%;
+  background-color: rgba(254, 245, 245, 0.9);
+  padding: 16%;
+  /* width: auto; */
+  /* height: 100%; */
+  margin: auto;
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+}
+}
+  </style>
+</head>
+
+
+<body>
+
+
+  <nav>
+    <li>
+        <ul>Algorithm Visualizer</ul>
+        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/FFFFFF/serial-tasks.png" alt="serial-tasks"/>        </li>
+    <li>
+        <ul><a href="#"></a>Merge</ul>
+        <ul><a href="#"></a>Insertion</ul>
+        <ul><a href="#"></a>Bubble</ul>
+        <ul><a href="#"></a>Heap</ul>
+        <ul><a href="#"></a>Quick</ul>
+        <ul><a href="#"></a>Dijkstra</ul>
+    </li>
+</nav>
+<section class="theory">
+
+    <div class="intro">
+        <h1>Heap Sort</h1>
+        <p class="introtext">Heap sort is a comparison-based sorting technique based on Binary Heap data structure. 
+          It is similar to the selection sort where we first find the minimum element and place the minimum element at the beginning. 
+          Repeat the same process for the remaining elements.
+        </p>
+        </div>
+        <div class="svgimage">
+        <a href="#visualize">
+                <img  width="50" height="50" src="https://img.icons8.com/ios-filled/50/circled-chevron-right.png"
+                alt="circled-chevron-right"/>
+            </a>
+
+         <p>Continue to Visualizer</p>
+</div>
+
+</section>
+
+  <div class="container">
+    <div class="array-container" id="arrayContainer"></div>
+  </div>
+  <script>
+    // Delay in milliseconds between each step for visualization
+    const delay = 100;
+
+    // Swap two elements in the array
+    function swap(arr, i, j) {
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+
+    // Perform heapify operation on a subtree rooted at index i
+    async function heapify(arr, n, i) {
+      let largest = i;
+      const left = 2 * i + 1;
+      const right = 2 * i + 2;
+
+      if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+      }
+
+      if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+      }
+
+      if (largest !== i) {
+        swap(arr, i, largest);
+        await visualize(arr);
+        await heapify(arr, n, largest);
+      }
+    }
+
+    // Heap Sort algorithm
+    async function heapSort(arr) {
+      const n = arr.length;
+
+      // Build max heap
+      for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        await heapify(arr, n, i);
+      }
+
+      // Extract elements from the heap in sorted order
+      for (let i = n - 1; i > 0; i--) {
+        swap(arr, 0, i);
+        await visualize(arr);
+        await heapify(arr, i, 0);
+      }
+
+      // Sort completed
+      await visualize(arr);
+    }
+
+    // Visualize the array
+    async function visualize(arr) {
+      const arrayContainer = document.getElementById('arrayContainer');
+      arrayContainer.innerHTML = '';
+
+      for (const value of arr) {
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = `${value * 10}px`;
+        arrayContainer.appendChild(bar);
+      }
+
+      // Delay to visualize the changes
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    // Example usage
+    const arr = [4, 10, 3, 5, 1,10,17,18,3,2];
+    heapSort(arr);
+  </script>
+</body>
+</html>

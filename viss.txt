@@ -1,0 +1,18 @@
+heap sort:
+
+Heap sort is a comparison-based sorting technique based on Binary Heap data structure where we first find the minimum element
+and place the minimum element at the beginning. 
+Algorithm
+1)Build a heap from the given input array.
+2)Repeat the following steps until the heap contains only one element:
+ -Swap the root element of the heap (which is the largest element) with the last element of the heap.
+ -Remove the last element of the heap (which is now in the correct position).
+ -Heapify the remaining elements of the heap.
+3)The sorted array is obtained by reversing the order of the elements in the input array.
+
+quick sort
+
+QuickSort is a sorting algorithm based on the Divide and Conquer algorithm that picks an element as a pivot 
+and partitions the given array around the picked pivot by placing the pivot in its correct position in the sorted array.
+Algorithm
+1)
